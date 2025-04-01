@@ -67,12 +67,12 @@ function install() {
 	systemctl enable dnsmasq
 	mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
 	rm -rf /etc/dnsmasq.conf
-	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/abidarwish/helium/main/dnsmasq.conf"
+	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/dnsmasq.conf"
 	sed -i "s/YourPublicIP/${publicIP}/" /etc/dnsmasq.conf
 	rm -rf ${providers}
-	wget -q -O ${providers} "https://raw.githubusercontent.com/abidarwish/helium/main/providers.txt"
+	wget -q -O ${providers} "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/providers.txt"
 	rm -rf /usr/local/sbin/helium_daily
-	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/abidarwish/helium/main/helium_daily.sh"
+	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/helium_daily.sh"
 	chmod 755 /usr/local/sbin/helium_daily
 	sed -i '/helium_daily/d' /etc/crontab
 	echo -e "0 4 * * * root helium_daily # Helium by Abi Darwish" >>/etc/crontab
@@ -283,12 +283,12 @@ function reinstall() {
 	apt update && apt install -y dnsmasq dnsutils vnstat resolvconf
 	systemctl enable dnsmasq >/dev/null 2>&1
 	rm -rf /etc/dnsmasq.conf
-	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/abidarwish/helium/main/dnsmasq.conf"
+	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/main/dnsmasq.conf"
 	sed -i "s/YourPublicIP/${publicIP}/" /etc/dnsmasq.conf
 	rm -rf ${providers}
-	wget -q -O ${providers} "https://raw.githubusercontent.com/abidarwish/helium/main/providers.txt"
+	wget -q -O ${providers} "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/main/providers.txt"
 	rm -rf /usr/local/sbin/helium_daily
-	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/abidarwish/helium/main/helium_daily.sh"
+	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/helium_daily.sh"
 	chmod 755 /usr/local/sbin/helium_daily
 	sed -i '/helium_daily/d' /etc/crontab
 	echo -e "0 4 * * * root helium_daily # Helium by Abi Darwish" >>/etc/crontab
@@ -575,7 +575,7 @@ function updateHelium() {
 	echo -e -n " Checking for update..."
 	sleep 1
 	rm -rf /tmp/helium.tmp
-	wget -q -O /tmp/helium.tmp "https://raw.githubusercontent.com/abidarwish/helium/main/helium.sh"
+	wget -q -O /tmp/helium.tmp "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/helium.sh"
 	LATEST_HELIUM=$(grep -w "VERSIONNUMBER=" /tmp/helium.tmp | awk -F'"' '{print $2}' | head -n 1)
 	INSTALLED_HELIUM=$(grep -w "VERSIONNUMBER=" /usr/local/sbin/helium | awk -F'"' '{print $2}' | head -n 1)
 	if [[ ${INSTALLED_HELIUM} == ${LATEST_HELIUM} ]]; then
@@ -599,17 +599,17 @@ function updateHelium() {
 	echo -n -e " Updating Helium..."
 	if [[ ${OVERWRITE,,} == "y" ]]; then
 		rm -rf /etc/dnsmasq/providers.txt
-		wget -q -O /etc/dnsmasq/providers.txt "https://raw.githubusercontent.com/abidarwish/helium/main/providers.txt"
+		wget -q -O /etc/dnsmasq/providers.txt "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/providers.txt"
 	fi
 	mv /tmp/helium.tmp /usr/local/sbin/helium
 	chmod 755 /usr/local/sbin/helium
 	OLD_NAMESERVER=$(grep -w "server" /etc/dnsmasq.conf | awk -F'=' '{print $2}' | head -n 1)
 	rm -rf /etc/dnsmasq.conf
-	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/abidarwish/helium/main/dnsmasq.conf"
+	wget -q -O /etc/dnsmasq.conf "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/dnsmasq.conf"
 	NEW_NAMESERVER=$(grep -w "server" /etc/dnsmasq.conf | awk -F'=' '{print $2}' | head -n 1)
 	sed -i "s/${NEW_NAMESERVER}/${OLD_NAMESERVER}/" /etc/dnsmasq.conf
 	rm -rf /usr/local/sbin/helium_daily
-	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/abidarwish/helium/main/helium_daily.sh"
+	wget -q -O /usr/local/sbin/helium_daily "https://raw.githubusercontent.com/ZarulOfficial/helium/refs/heads/main/helium_daily.sh"
 	chmod 755 /usr/local/sbin/helium_daily
 	sed -i '/helium_daily/d' /etc/crontab
 	echo -e "0 4 * * * root helium_daily # Helium by Abi Darwish" >>/etc/crontab
